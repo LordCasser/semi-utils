@@ -176,6 +176,7 @@ ITEM_LIST = [
     ElementItem(FILENAME_NAME, FILENAME_VALUE),
     ElementItem(DATE_FILENAME_NAME, DATE_FILENAME_VALUE),
     ElementItem(DATETIME_FILENAME_NAME, DATETIME_FILENAME_VALUE),
+    ElementItem(GEO_INFO, GEO_INFO_VALUE),
 ]
 
 # 菜单位置与菜单项的映射
@@ -229,7 +230,6 @@ for m in config._makes.values():
     item_menu.set_procedure(config.set_default_logo_path, logo_path=m['path'])
     item_menu._value = m['path']
     default_logo_menu.add(item_menu)
-
 
 # 更多设置
 more_setting_menu = SubMenu('更多设置')
