@@ -122,7 +122,13 @@ class Config(object):
 
     def get_bold_font(self):
         return ImageFont.truetype(self._data['base']['bold_font'], self.get_bold_font_size())
-
+    
+    def get_special_font(self):
+        return ImageFont.truetype(self._data['base']['special_font'], self.get_font_size())
+    
+    def change_left_top_layout(self, name):
+        self._left_top.element['name'] = name
+        
     def get_font_size(self):
         font_size = self._data['base']['font_size']
         if font_size == 1:

@@ -8,6 +8,8 @@ base:
   input_dir: ./input
   output_dir: ./output
   quality: 100
+  special_font: ./fonts/Rilastail-wo3GP.ttf
+  special_font_size: 1
 global:
   focal_length:
     use_equivalent_focal_length: false

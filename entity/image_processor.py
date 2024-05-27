@@ -1,3 +1,4 @@
+import logging
 import string
 
 from PIL import Image
@@ -9,7 +10,7 @@ from entity.image_container import ImageContainer
 from enums.constant import GRAY
 from enums.constant import TRANSPARENT
 from utils import append_image_by_side
-from utils import concatenate_image
+from utils import concatenate_image, concatenate_images_horizontally
 from utils import merge_images
 from utils import padding_image
 from utils import resize_image_with_height
@@ -142,11 +143,22 @@ class WatermarkProcessor(ProcessorComponent):
 
         with Image.new('RGBA', (10, 100), color=self.bg_color) as empty_padding:
             # 填充左边的文字内容
-            left_top = text_to_image(container.get_attribute_str(config.get_left_top()),
-                                     config.get_font(),
-                                     config.get_bold_font(),
-                                     is_bold=self.bold_font_lt,
-                                     fill=self.font_color_lt)
+            if container.lens_make == "Voigtländer":
+                config.change_left_top_layout("LensMake_LensModel")
+                left_top = text_to_image(container.get_attribute_str(config.get_left_top()),
+                                        config.get_special_font(),
+                                        config.get_special_font(),
+                                        is_bold=False,
+                                        fill=self.font_color_lt)
+            else:
+                # empty_padding_width = Image.new('RGBA', (100, 0), color=self.bg_color)
+                left_top = text_to_image(container.get_attribute_str(config.get_left_top()),
+                                        config.get_font(),
+                                        config.get_bold_font(),
+                                        is_bold=self.bold_font_lt,
+                                        fill=self.font_color_lt)
+                # left_top = concatenate_images_horizontally([left_top_special,empty_padding_width,left_top_normal])
+
             left_bottom = text_to_image(container.get_attribute_str(config.get_left_bottom()),
                                         config.get_font(),
                                         config.get_bold_font(),

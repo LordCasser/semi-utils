@@ -124,6 +124,38 @@ def remove_white_edge(image):
     new_image = image.crop((min_x, min_y, max_x + 1, max_y + 1))
     return new_image
 
+def concatenate_images_horizontally(images,align='center'):
+    """
+    将多张图片拼接成一行
+    :param images: 图片对象列表
+    :param align: 对齐方向，top/center/bottom
+    :return: 拼接后的图片对象
+    """
+    widths, heights = zip(*(i.size for i in images))
+    max_height = max(heights)
+    sum_width = sum(widths)
+
+    new_img = Image.new('RGBA', (sum_width, max_height), color=TRANSPARENT)
+
+    x_offset = 0
+    y_offset = 0
+
+    if 'top' == align:
+        for img in images:
+            new_img.paste(img, (x_offset, 0))
+            x_offset += img.width
+    elif 'center' == align:
+        for img in images:
+            y_offset = int((max_height - img.height) / 2)
+            new_img.paste(img, (x_offset, y_offset))
+            x_offset += img.width
+    elif 'bottom' == align:
+        for img in images:
+            y_offset = max_height - img.height
+            new_img.paste(img, (x_offset, y_offset))
+            x_offset += img.width
+
+    return new_img
 
 def concatenate_image(images, align='left'):
     """
