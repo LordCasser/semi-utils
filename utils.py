@@ -4,7 +4,7 @@ import re
 import shutil
 import subprocess
 from pathlib import Path
-
+import string
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageOps
@@ -24,6 +24,11 @@ else:
 logger = logging.getLogger(__name__)
 
 
+def filter_non_printable(text):
+    printable = set(string.printable)
+    filtered_text = ''.join(filter(lambda x: x in printable, text))
+    return filtered_text
+
 def get_file_list(path):
     """
     获取 jpg 文件列表
@@ -32,7 +37,7 @@ def get_file_list(path):
     """
     path = Path(path, encoding=ENCODING)
     return [file_path for file_path in path.iterdir()
-            if file_path.is_file() and file_path.suffix in ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG']]
+            if file_path.is_file() and file_path.suffix.lower() in ['.jpg', '.jpeg', '.png']]
 
 
 def get_exif(path) -> dict:
@@ -61,11 +66,11 @@ def get_exif(path) -> dict:
             key = re.sub(r'/', '', key)
             # 将键值对添加到字典中
             exif_dict[key] = value
-        for key, value in exif_dict.items():
-            # 过滤非 ASCII 字符
-            value_clean = ''.join(c for c in value if ord(c) < 128)
-            # 将处理后的值更新到 exif_dict 中
-            exif_dict[key] = value_clean
+        # for key, value in exif_dict.items():
+        #     # 过滤非 ASCII 字符
+        #     value_clean = filter_non_printable(value)
+        #     # 将处理后的值更新到 exif_dict 中
+        #     exif_dict[key] = value_clean
     except Exception as e:
         logger.error(f'get_exif error: {path} : {e}')
 

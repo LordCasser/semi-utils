@@ -120,7 +120,10 @@ class ImageContainer(object):
         self._param_dict[MAKE_VALUE] = self.make
         self._param_dict[DATETIME_VALUE] = self._parse_datetime()
         self._param_dict[DATE_VALUE] = self._parse_date()
-        self._param_dict[LENS_VALUE] = self.lens_model
+        if self.lens_make == "" and not self.lens_model.upper().startswith("NIKKOR"):
+            self._param_dict[LENS_VALUE] = "Voigtländer" + " " + self.lens_model
+        else:
+            self._param_dict[LENS_VALUE] = self.lens_model
         filename_without_ext = os.path.splitext(self.path.name)[0]
         self._param_dict[FILENAME_VALUE] = filename_without_ext
         self._param_dict[TOTAL_PIXEL_VALUE] = calculate_pixel_count(self.original_width, self.original_height)

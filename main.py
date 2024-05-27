@@ -39,7 +39,6 @@ def image_process_callback(processor_chain_, source_path_):
 
     # 保存图片
     target_path = Path(config.get_output_dir(), encoding=ENCODING).joinpath(source_path_.name)
-
     container.save(target_path, quality=config.get_quality())
     container.close()
 
