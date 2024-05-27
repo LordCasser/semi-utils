@@ -148,8 +148,9 @@ class WatermarkProcessor(ProcessorComponent):
                 left_top = text_to_image(container.get_attribute_str(config.get_left_top()),
                                         config.get_special_font(),
                                         config.get_special_font(),
-                                        is_bold=False,
+                                        is_bold=self.bold_font_lt,
                                         fill=self.font_color_lt)
+                self.bold_font_lb = True
             else:
                 # empty_padding_width = Image.new('RGBA', (100, 0), color=self.bg_color)
                 left_top = text_to_image(container.get_attribute_str(config.get_left_top()),
