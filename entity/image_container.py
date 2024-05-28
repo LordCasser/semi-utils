@@ -124,7 +124,6 @@ class ImageContainer(object):
             self.lens_make = "Voigtländer"
             self.lens_model = "NOKTON" + " " + self.lens_model + " " + "Aspherical"
             self._param_dict[LENS_VALUE] =  self.lens_model
-            # self._param_dict[LENS_MAKE_LENS_MODEL_VALUE] = "Voigtländer" + " " + self._param_dict[LENS_VALUE]
         else:
             self._param_dict[LENS_VALUE] = self.lens_model
         filename_without_ext = os.path.splitext(self.path.name)[0]
