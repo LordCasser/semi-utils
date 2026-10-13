@@ -9,3 +9,5 @@ exiftool
 build
 dist
 logs
+# install.sh 本地初始化标记
+inited
